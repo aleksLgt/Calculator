@@ -13,3 +13,9 @@ func TestSubtract(t *testing.T) {
 		t.Error("25.3 - 11.4 did not equal 13.9")
 	}
 }
+
+func TestDivide(t *testing.T) {
+	if Divide(10.23, 0.2) != 51.15 {
+		t.Error("10.23 / 0.2 did not equal 51.15")
+	}
+}

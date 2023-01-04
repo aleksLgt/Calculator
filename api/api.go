@@ -32,6 +32,7 @@ func (c *RequestData) SecondValue() float64 {
 func InitializeEndpoints() {
 	http.HandleFunc("/calculator/add", addHandler)
 	http.HandleFunc("/calculator/subtract", subtractHandler)
+	http.HandleFunc("/calculator/divide", divideHandler)
 }
 
 func addHandler(writer http.ResponseWriter, request *http.Request) {
@@ -43,6 +44,13 @@ func addHandler(writer http.ResponseWriter, request *http.Request) {
 func subtractHandler(writer http.ResponseWriter, request *http.Request) {
 	calcRequest := getRequestData(request)
 	result := math.Subtract(calcRequest.FirstValue(), calcRequest.SecondValue())
+	setWriter(writer, result)
+}
+
+func divideHandler(writer http.ResponseWriter, request *http.Request) {
+	calcRequest := getRequestData(request)
+	result := math.Divide(calcRequest.FirstValue(), calcRequest.SecondValue())
+	fmt.Println(result)
 	setWriter(writer, result)
 }
 
