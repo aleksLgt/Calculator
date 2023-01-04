@@ -3,7 +3,9 @@ package api
 import (
 	"Calculator/errors"
 	"Calculator/math"
-	"fmt"
+	"github.com/gin-gonic/contrib/static"
+	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -30,40 +32,45 @@ func (c *RequestData) SecondValue() float64 {
 }
 
 func InitializeEndpoints() {
-	http.HandleFunc("/calculator/add", addHandler)
-	http.HandleFunc("/calculator/subtract", subtractHandler)
-	http.HandleFunc("/calculator/divide", divideHandler)
-	http.HandleFunc("/calculator/multiply", multiplyHandler)
+	router := gin.Default()
+	router.Use(static.Serve("/", static.LocalFile("./views", true)))
+	api := router.Group("/api")
+	{
+		api.GET("/calculator/add", addHandler)
+		api.GET("/calculator/subtract", subtractHandler)
+		api.GET("/calculator/divide", divideHandler)
+		api.GET("/calculator/multiply", multiplyHandler)
+	}
+
+	err := router.Run(":3000")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
 
-func addHandler(writer http.ResponseWriter, request *http.Request) {
-	calcRequest := getRequestData(request)
+func addHandler(c *gin.Context) {
+	calcRequest := getRequestData(c.Request)
 	result := math.Add(calcRequest.FirstValue(), calcRequest.SecondValue())
-	setWriter(writer, result)
+	setResponse(c, result)
 }
 
-func subtractHandler(writer http.ResponseWriter, request *http.Request) {
-	calcRequest := getRequestData(request)
+func subtractHandler(c *gin.Context) {
+	calcRequest := getRequestData(c.Request)
 	result := math.Subtract(calcRequest.FirstValue(), calcRequest.SecondValue())
-	setWriter(writer, result)
+	setResponse(c, result)
 }
 
-func divideHandler(writer http.ResponseWriter, request *http.Request) {
-	calcRequest := getRequestData(request)
+func divideHandler(c *gin.Context) {
+	calcRequest := getRequestData(c.Request)
 	result := math.Divide(calcRequest.FirstValue(), calcRequest.SecondValue())
-	setWriter(writer, result)
+	setResponse(c, result)
 }
 
-func multiplyHandler(writer http.ResponseWriter, request *http.Request) {
-	calcRequest := getRequestData(request)
+func multiplyHandler(c *gin.Context) {
+	calcRequest := getRequestData(c.Request)
 	result := math.Multiply(calcRequest.FirstValue(), calcRequest.SecondValue())
-	setWriter(writer, result)
-}
-
-func setWriter(writer http.ResponseWriter, result float64) {
-	stringValue := fmt.Sprint(result)
-	_, err := writer.Write([]byte(stringValue))
-	errors.Check(err)
+	setResponse(c, result)
 }
 
 func getRequestData(request *http.Request) RequestData {
@@ -75,4 +82,11 @@ func getRequestData(request *http.Request) RequestData {
 	calcRequest.SetFirstValue(firstValue)
 	calcRequest.SetSecondValue(secondValue)
 	return calcRequest
+}
+
+func setResponse(c *gin.Context, responseData float64) {
+	c.Header("Content-Type", "application/json")
+	c.JSON(http.StatusOK, gin.H{
+		"response": responseData,
+	})
 }

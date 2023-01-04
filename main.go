@@ -1,13 +1,7 @@
 package main
 
-import (
-	"Calculator/api"
-	"log"
-	"net/http"
-)
+import "Calculator/api"
 
 func main() {
 	api.InitializeEndpoints()
-	err := http.ListenAndServe("localhost:8080", nil)
-	log.Fatal(err)
 }
