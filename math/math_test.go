@@ -19,3 +19,9 @@ func TestDivide(t *testing.T) {
 		t.Error("10.23 / 0.2 did not equal 51.15")
 	}
 }
+
+func TestMultiply(t *testing.T) {
+	if Multiply(10.23, 0.2) != 2.046 {
+		t.Error("10.23 * 0.2 did not equal 2.046")
+	}
+}
