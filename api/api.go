@@ -62,6 +62,7 @@ func subtractHandler(c *gin.Context) {
 }
 
 func divideHandler(c *gin.Context) {
+	defer errors.ReportPanic(c)
 	calcRequest := getRequestData(c.Request)
 	result := math.Divide(calcRequest.FirstValue(), calcRequest.SecondValue())
 	setResponse(c, result)
@@ -84,7 +85,7 @@ func getRequestData(request *http.Request) RequestData {
 	return calcRequest
 }
 
-func setResponse(c *gin.Context, responseData float64) {
+func setResponse(c *gin.Context, responseData any) {
 	c.Header("Content-Type", "application/json")
 	c.JSON(http.StatusOK, gin.H{
 		"response": responseData,
