@@ -42,7 +42,7 @@ func InitializeEndpoints() {
 		api.GET("/calculator/multiply", multiplyHandler)
 	}
 
-	err := router.Run(":3000")
+	err := router.Run(":8080")
 	if err != nil {
 		log.Fatal(err)
 	}
