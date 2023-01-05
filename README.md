@@ -19,11 +19,11 @@ How to use:
 5. If the program launch was successful, the application is available at "http://localhost:8080/"
 
 Applied knowledge:
-* Use Gin Web Framework for developing APIs
+* Using Gin Web Framework for developing APIs
 * Splitting the code into packages
 * Using structures
 * Using encapsulation at the expense of getters and setters
 * Implementation of calculator logic
 * Using external packages
-* Error Handling (e.g. Cannot be divided by zero)
+* Error Handling (e.g. Cannot be divided by zero) by using defer, recover()
 * Autotests
