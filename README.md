@@ -26,3 +26,4 @@ Applied knowledge:
 * Implementation of calculator logic
 * Using external packages
 * Error Handling (e.g. Cannot be divided by zero)
+* Autotests
