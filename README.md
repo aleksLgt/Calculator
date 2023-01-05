@@ -13,7 +13,7 @@ Params:
 
 How to use:
 1. Download and install git https://git-scm.com/ , golang https://go.dev/doc/install
-2. Clone repo on your computer git clone https://github.com/aleksLgt/Calculator.git
+2. Clone repo on your computer "git clone https://github.com/aleksLgt/Calculator.git"
 3. Go to the project folder
 4. Run "go run main.go"
 5. If the program launch was successful, the application is available at "http://localhost:8080/"
