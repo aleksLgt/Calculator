@@ -25,13 +25,11 @@ func TestDivide(t *testing.T) {
 func TestDivideByZero(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
-			t.Error("The code did not panic")
+			t.Error("The code did not panic, but must")
 		}
 	}()
 
-	if Divide(10.23, 0) != 51.15 {
-		t.Error("10.23 / 2 did not equal 51.15")
-	}
+	Divide(10.23, 0)
 }
 
 func TestMultiply(t *testing.T) {
